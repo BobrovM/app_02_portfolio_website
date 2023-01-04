@@ -1,4 +1,5 @@
 import streamlit as st
+import pandas
 
 
 st.set_page_config(layout="wide")
@@ -16,3 +17,21 @@ with col2:
 
 content_intro = """You can find my projects below. Feel free to contact me!"""
 st.write(content_intro)
+
+col3, empty_col, col4 = st.columns([2, 0.5, 2])
+
+df = pandas.read_csv("data.csv", sep=";")
+
+with col3:
+    for index, row in df[:10].iterrows():
+        st.header(row["title"])
+        st.image("images/"+row["image"])
+        st.write(row["description"])
+        st.info(f"Source code: {row['url']}")
+
+with col4:
+    for index, row in df[10:].iterrows():
+        st.header(row["title"])
+        st.image("images/" + row["image"])
+        st.write(row["description"])
+        st.info(f"Source code: {row['url']}")
